@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WE'RE HIRING — Post House Crew</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --ink:#f5f1e8;
+    --acid:#d4ff00;
+    --hot:#ff4d3d;
+    --bubble:#ff6fb5;
+    --cobalt:#3d5cff;
+    --cream:#f5f1e8;
+    --muted:#8a857a;
+    --card:#141414;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',sans-serif;overflow-x:hidden}
+  body{
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(212,255,0,.08), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(255,77,61,.08), transparent 45%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* TICKER */
+  .ticker{
+    background:var(--acid);color:#000;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+    padding:10px 0;overflow:hidden;white-space:nowrap;
+    border-bottom:2px solid #000;
+  }
+  .ticker-track{display:inline-block;animation:scroll 25s linear infinite}
+  .ticker span{margin:0 30px}
+  .ticker .star{color:var(--hot)}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* HERO */
+  .hero{padding:60px 5vw 40px;position:relative;border-bottom:1px dashed rgba(245,241,232,.2)}
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;
+  }
+  .hero-tag::before{
+    content:'';width:8px;height:8px;background:var(--acid);
+    border-radius:50%;animation:pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.4)}}
+  .hero h1{font-size:clamp(56px,11vw,180px);line-height:.88;font-weight:800;letter-spacing:-.04em;margin-bottom:30px}
+  .hero h1 .ital{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--acid)}
+  .hero h1 .hot{color:var(--hot)}
+  .hero-sub{max-width:680px;font-size:18px;line-height:1.5;color:rgba(245,241,232,.7);margin-bottom:40px}
+  .hero-sub b{color:var(--ink);font-weight:600}
+  .quick-stats{display:flex;flex-wrap:wrap;gap:40px;margin-top:30px}
+  .stat{font-family:'JetBrains Mono',monospace}
+  .stat-num{font-size:38px;color:var(--acid);font-weight:700;line-height:1}
+  .stat-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:6px}
+
+  /* TABS */
+  .tabs{
+    position:sticky;top:0;z-index:50;background:var(--bg);
+    padding:20px 5vw;border-bottom:1px solid rgba(245,241,232,.15);
+    display:flex;gap:12px;flex-wrap:wrap;
+  }
+  .tab{
+    background:transparent;color:var(--ink);
+    border:2px solid rgba(245,241,232,.2);
+    padding:14px 24px;border-radius:999px;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:15px;
+    cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;
+  }
+  .tab:hover{border-color:var(--ink);transform:translateY(-2px)}
+  .tab.active{background:var(--acid);color:#000;border-color:var(--acid)}
+  .tab .badge{
+    background:var(--hot);color:#fff;font-family:'JetBrains Mono',monospace;
+    font-size:10px;padding:3px 7px;border-radius:4px;
+  }
+  .tab.active .badge{background:#000;color:var(--acid)}
+
+  /* JOB */
+  .job{display:none;padding:60px 5vw 100px;position:relative}
+  .job.active{display:block;animation:fadeIn .5s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .job-header{
+    display:grid;grid-template-columns:1fr auto;gap:40px;align-items:flex-end;
+    padding-bottom:40px;border-bottom:2px solid var(--ink);margin-bottom:50px;
+  }
+  .job-id{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);margin-bottom:14px}
+  .job-title{font-size:clamp(40px,7vw,82px);font-weight:800;line-height:.95;letter-spacing:-.03em}
+  .job-title .accent{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .job-meta{display:flex;flex-direction:column;gap:10px;align-items:flex-end;font-family:'JetBrains Mono',monospace;font-size:12px}
+  .pill{
+    background:var(--cream);color:#000;padding:8px 14px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:1px;font-weight:700;
+  }
+  .pill.acid{background:var(--acid)}
+  .pill.hot{background:var(--hot);color:#fff}
+  .pill.cobalt{background:var(--cobalt);color:#fff}
+  .pill.bubble{background:var(--bubble);color:#000}
+
+  .content{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+  @media (max-width:900px){
+    .content{grid-template-columns:1fr;gap:40px}
+    .job-header{grid-template-columns:1fr}
+    .job-meta{align-items:flex-start}
+  }
+
+  .section h2{
+    font-size:14px;font-family:'JetBrains Mono',monospace;
+    text-transform:uppercase;letter-spacing:2px;color:var(--muted);
+    margin-bottom:24px;display:flex;align-items:center;gap:12px;
+  }
+  .section h2::before{content:'';width:24px;height:2px;background:var(--acid)}
+
+  .task-list{list-style:none}
+  .task-list li{
+    padding:18px 0;border-bottom:1px dashed rgba(245,241,232,.15);
+    display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:flex-start;
+    font-size:17px;line-height:1.4;
+  }
+  .task-list li:last-child{border-bottom:none}
+  .task-num{
+    font-family:'JetBrains Mono',monospace;color:var(--acid);
+    font-size:13px;font-weight:700;margin-top:4px;min-width:30px;
+  }
+  .task-list li b{font-weight:700;color:var(--ink)}
+  .task-list li .desc{display:block;color:var(--muted);font-size:14px;margin-top:4px}
+
+  .req-box{
+    background:rgba(245,241,232,.03);border:1px solid rgba(245,241,232,.1);
+    border-radius:16px;padding:32px;
+  }
+  .req-box h3{
+    font-size:13px;font-family:'JetBrains Mono',monospace;
+    text-transform:uppercase;letter-spacing:1.5px;color:var(--acid);margin-bottom:18px;
+  }
+  .req-box ul{list-style:none}
+  .req-box li{padding:12px 0;font-size:15px;line-height:1.5;display:flex;gap:12px}
+  .req-box li::before{content:'→';color:var(--hot);font-weight:700;flex-shrink:0}
+  .req-box.plus{border-color:var(--acid);background:rgba(212,255,0,.05)}
+  .req-box.plus h3{color:var(--acid)}
+  .req-box.plus li::before{content:'★';color:var(--acid)}
+
+  .tools-title{
+    font-size:11px;font-family:'JetBrains Mono',monospace;
+    color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;
+    margin-top:30px;margin-bottom:14px;
+  }
+  .tools{display:flex;flex-wrap:wrap;gap:10px}
+  .tool{
+    background:#1a1a1a;border:1px solid rgba(245,241,232,.15);
+    padding:10px 16px;border-radius:8px;
+    font-family:'JetBrains Mono',monospace;font-size:13px;transition:all .2s;
+  }
+  .tool:hover{border-color:var(--acid);color:var(--acid);transform:translateY(-2px)}
+  .tool.hot{border-color:var(--hot);color:var(--hot)}
+
+  /* WORKFLOW */
+  .workflow{
+    margin-top:60px;padding:40px;background:var(--card);
+    border-radius:20px;border:1px solid rgba(245,241,232,.08);
+  }
+  .workflow h2{
+    font-size:14px;font-family:'JetBrains Mono',monospace;
+    text-transform:uppercase;letter-spacing:2px;color:var(--muted);
+    margin-bottom:30px;display:flex;align-items:center;gap:12px;
+  }
+  .workflow h2::before{content:'';width:24px;height:2px;background:var(--bubble)}
+  .flow-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px}
+  .flow-step{
+    position:relative;padding:20px 16px;
+    background:rgba(245,241,232,.03);border-radius:12px;
+    border:1px solid rgba(245,241,232,.08);
+  }
+  .flow-step .num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bubble);margin-bottom:8px;letter-spacing:1px}
+  .flow-step .name{font-weight:700;font-size:15px;margin-bottom:4px}
+  .flow-step .tool-name{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+  .flow-step::after{
+    content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+    color:var(--acid);font-weight:700;font-size:20px;z-index:2;
+  }
+  .flow-step:last-child::after{display:none}
+  @media (max-width:700px){.flow-step::after{display:none}}
+
+  .outputs{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .output-card{
+    background:rgba(245,241,232,.03);border:1px solid rgba(245,241,232,.1);
+    border-radius:12px;padding:20px;
+  }
+  .output-card .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--hot);letter-spacing:1px;margin-bottom:8px}
+  .output-card .label{font-weight:700;font-size:15px;line-height:1.3}
+  .output-card .meta{font-size:12px;color:var(--muted);margin-top:6px;font-family:'JetBrains Mono',monospace}
+
+  /* CTA */
+  .cta-banner{
+    margin-top:80px;padding:50px;background:var(--acid);color:#000;
+    border-radius:24px;position:relative;overflow:hidden;
+  }
+  .cta-banner::before{
+    content:'★';position:absolute;font-size:300px;right:-40px;top:-100px;
+    opacity:.1;font-family:'Instrument Serif',serif;
+  }
+  .cta-banner h3{font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em;margin-bottom:16px}
+  .cta-banner h3 .ital{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .cta-banner p{font-size:16px;max-width:520px;margin-bottom:24px;line-height:1.5}
+  .cta-banner a{
+    display:inline-flex;align-items:center;gap:10px;
+    background:#000;color:var(--acid);padding:16px 28px;border-radius:999px;
+    text-decoration:none;font-weight:700;font-size:15px;transition:transform .2s;
+  }
+  .cta-banner a:hover{transform:translateX(6px)}
+
+  footer{
+    padding:40px 5vw;border-top:1px dashed rgba(245,241,232,.2);
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;
+  }
+
+  .marquee-row{
+    background:var(--ink);color:#000;padding:18px 0;overflow:hidden;white-space:nowrap;
+    border-top:2px solid #000;border-bottom:2px solid #000;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+    font-size:32px;letter-spacing:-.02em;
+  }
+  .marquee-track{display:inline-block;animation:scroll 20s linear infinite}
+  .marquee-track span{margin:0 30px}
+  .marquee-track .ital{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .marquee-track .dot{color:var(--hot)}
+
+  .intro-block{max-width:780px;margin-bottom:50px;font-size:18px;line-height:1.55;color:rgba(245,241,232,.75)}
+  .intro-block b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span>✦ NOW HIRING</span><span class="star">★</span>
+    <span>2 OPEN POSITIONS</span><span class="star">★</span>
+    <span>POST HOUSE CREW</span><span class="star">★</span>
+    <span>MULTIMEDIA × AI</span><span class="star">★</span>
+    <span>JOIN THE STUDIO</span><span class="star">★</span>
+    <span>✦ NOW HIRING</span><span class="star">★</span>
+    <span>2 OPEN POSITIONS</span><span class="star">★</span>
+    <span>POST HOUSE CREW</span><span class="star">★</span>
+    <span>MULTIMEDIA × AI</span><span class="star">★</span>
+    <span>JOIN THE STUDIO</span><span class="star">★</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-tag">CAREERS / 2026 / POST HOUSE</div>
+  <h1>
+    we make<br>
+    <span class="ital">cool sh*t</span><br>
+    & we need <span class="hot">u</span>.
+  </h1>
+  <p class="hero-sub">
+    Đợt này tuyển <b>2 vị trí</b>: 1 bạn Multimedia Designer "all-rounder" và 1 bạn AI Creative để
+    đẩy mạnh hướng generative content. Welcome sinh viên năm cuối, freelancer muốn ổn định,
+    và những bạn đã từng cày qua post house — bay vào nhé.
+  </p>
+
+  <div class="quick-stats">
+    <div class="stat"><div class="stat-num">2</div><div class="stat-lbl">open roles</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-lbl">vibes only</div></div>
+  </div>
+</section>
+
+<div class="marquee-row">
+  <div class="marquee-track">
+    <span>MULTIMEDIA</span><span class="dot">●</span>
+    <span class="ital">motion</span><span class="dot">●</span>
+    <span>3D</span><span class="dot">●</span>
+    <span>COMP</span><span class="dot">●</span>
+    <span>AI CREATIVE</span><span class="dot">●</span>
+    <span class="ital">storyboard</span><span class="dot">●</span>
+    <span>GEN IMG</span><span class="dot">●</span>
+    <span>I2V</span><span class="dot">●</span>
+    <span class="ital">voice</span><span class="dot">●</span>
+    <span>MULTIMEDIA</span><span class="dot">●</span>
+    <span class="ital">motion</span><span class="dot">●</span>
+    <span>3D</span><span class="dot">●</span>
+    <span>AI CREATIVE</span><span class="dot">●</span>
+  </div>
+</div>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="multi">
+    <span>🎨</span> Multimedia Designer <span class="badge">01</span>
+  </button>
+  <button class="tab" data-tab="ai">
+    <span>🤖</span> AI Creative <span class="badge">02</span>
+  </button>
+</nav>
+
+<!-- ============ JOB 1: MULTIMEDIA ============ -->
+<section class="job active" id="multi">
+  <div class="job-header">
+    <div>
+      <div class="job-id">POSITION 01 / FULL-TIME / ONSITE</div>
+      <h1 class="job-title">Multimedia<br><span class="accent">Designer</span></h1>
+    </div>
+    <div class="job-meta">
+      <div class="pill acid">MOTION 2D/3D</div>
+      <div class="pill bubble">SOCIAL DAILY</div>
+      <div class="pill cobalt">COMP / EDIT</div>
+    </div>
+  </div>
+
+  <div class="intro-block">
+    Vị trí này là <b>"multimedia all-rounder"</b> — vừa làm motion (cả 2D &amp; 3D), vừa comp/edit, vừa
+    đẩy banner social hằng ngày. Bạn sẽ là một mắt xích trong pipeline post-production, hand-off
+    asset qua lại với team AI Creative và phụ trách hoàn thiện shot cuối cùng.
+  </div>
+
+  <div class="content">
+    <div class="section">
+      <h2>What you'll do</h2>
+      <ul class="task-list">
+        <li>
+          <span class="task-num">01</span>
+          <div>
+            <b>Motion Graphic (3D)</b>
+            <span class="desc">Modeling cơ bản, lighting, texturing, animate sản phẩm 3D cho campaign, KV, intro/outro, product reveal.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">02</span>
+          <div>
+            <b>Motion Graphic (2D)</b>
+            <span class="desc">Animate logo, infographic, lyric video, kinetic typography, story-telling motion theo brief.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">03</span>
+          <div>
+            <b>Compositing &amp; VFX cơ bản</b>
+            <span class="desc">Comp 3D render với footage thật bằng Nuke / After Effects, basic keying, tracking, integrate CG element vào shot.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">04</span>
+          <div>
+            <b>Banner Social / Daily Post</b>
+            <span class="desc">Output đều tay cho Facebook, IG, TikTok — đúng grid, đúng size, đúng vibe brand.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">05</span>
+          <div>
+            <b>Video Edit cơ bản</b>
+            <span class="desc">Cut, color cơ bản, sync nhạc, sub — chủ yếu cho social cuts và case study reel.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">06</span>
+          <div>
+            <b>Phối hợp với team AI</b>
+            <span class="desc">Tận dụng AI tool để tăng tốc workflow (Higgsfield, Magnific, SD…), nhận asset từ bạn AI Creative và đưa vào shot cuối.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="req-box">
+        <h3>★ Must have</h3>
+        <ul>
+          <li>Gu thẩm mỹ tốt, follow trend nhưng có tư duy riêng</li>
+          <li>Thành thạo <b>After Effects</b> và <b>Cinema 4D</b> hoặc <b>Blender</b></li>
+          <li>Hiểu nguyên lý animation: timing, easing, weight, anticipation</li>
+          <li>Biết <b>Premiere</b> ở mức edit social cuts ổn áp</li>
+          <li>Biết comp cơ bản — <b>Nuke</b> hoặc AE compositing</li>
+          <li>Biết dùng AI tool cơ bản (Higgsfield, Magnific, SD…)</li>
+          <li>Portfolio có ít nhất 3-5 sản phẩm motion thật</li>
+        </ul>
+      </div>
+
+      <div style="height:20px"></div>
+
+      <div class="req-box plus">
+        <h3>★ Nice to have</h3>
+        <ul>
+          <li>Đã từng làm tại <b>post house / studio production</b></li>
+          <li>Hiểu pipeline post-production end-to-end (offline → online → DI)</li>
+          <li>Quen với multi-pass render, EXR, ACES color workflow</li>
+          <li>Có sense về sound design, music selection cho motion</li>
+          <li>Sinh viên năm cuối / gần tốt nghiệp đều welcome 🤝</li>
+        </ul>
+      </div>
+
+      <div class="tools-title">— Tool stack</div>
+      <div class="tools">
+        <div class="tool">Blender</div>
+        <div class="tool">Cinema 4D</div>
+        <div class="tool">After Effects</div>
+        <div class="tool">Nuke</div>
+        <div class="tool">Premiere</div>
+        <div class="tool hot">Higgsfield</div>
+        <div class="tool hot">Magnific</div>
+        <div class="tool hot">SD</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <h3>think u're <span class="ital">the one?</span></h3>
+    <p>Gửi CV + portfolio (link Behance / Drive / Vimeo / YouTube đều ok) — tụi mình rep trong 3-5 ngày.</p>
+    <a href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank">Apply now →</a>
+  </div>
+</section>
+
+<!-- ============ JOB 2: AI CREATIVE ============ -->
+<section class="job" id="ai">
+  <div class="job-header">
+    <div>
+      <div class="job-id">POSITION 02 / FULL-TIME / ONSITE</div>
+      <h1 class="job-title">AI<br><span class="accent">Creative</span></h1>
+    </div>
+    <div class="job-meta">
+      <div class="pill hot">GEN AI</div>
+      <div class="pill acid">IMG → VIDEO</div>
+      <div class="pill bubble">STORYBOARD</div>
+    </div>
+  </div>
+
+  <div class="intro-block">
+    Vị trí này là <b>"AI creative all-in-one"</b> — không phải chỉ ngồi gen ảnh.
+    Bạn sẽ là người dẫn dắt workflow AI cho cả post house: từ <b>prompt engineering, storyboard,
+    gen image, image-to-video</b>, cho tới <b>voice &amp; audio AI</b>. Bạn cần có cảm quan visual
+    storytelling và hiểu cinematography đủ để output không bị "AI slop".
+  </div>
+
+  <div class="content">
+    <div class="section">
+      <h2>What you'll do</h2>
+      <ul class="task-list">
+        <li>
+          <span class="task-num">01</span>
+          <div>
+            <b>Image Generation theo brief</b>
+            <span class="desc">Prompt engineering chuyên sâu để gen image đúng style, đúng mood, đúng brand — cho KV, social post, concept art, reference frame.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">02</span>
+          <div>
+            <b>Image → Video (I2V)</b>
+            <span class="desc">Convert image sang video bằng Kling, Runway, Higgsfield, Veo, Hailuo… Hiểu camera move, framing, pacing để output có ngôn ngữ điện ảnh.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">03</span>
+          <div>
+            <b>Storyboard cho dự án AI</b>
+            <span class="desc">Build storyboard từ brief → shotlist → reference → key frames → final. Đảm bảo flow câu chuyện mạch lạc trước khi gen.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">04</span>
+          <div>
+            <b>Character / Style consistency</b>
+            <span class="desc">Giữ nhân vật, style, mood nhất quán xuyên suốt project — qua seed control, reference image, LoRA, prompt structure.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">05</span>
+          <div>
+            <b>Voice &amp; Audio AI</b>
+            <span class="desc">Sử dụng ElevenLabs, Suno và các tool TTS / music gen để hoàn thiện audio cho video AI.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">06</span>
+          <div>
+            <b>Post-processing AI output</b>
+            <span class="desc">Upscale với Magnific, retouch chi tiết bằng Photoshop / SD inpainting, cleanup artifact, color match để asset production-ready.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">07</span>
+          <div>
+            <b>R&amp;D tool &amp; workflow mới</b>
+            <span class="desc">Update tool mới mỗi tuần, test, build pipeline chuẩn cho team áp dụng. Maintain prompt library + style references.</span>
+          </div>
+        </li>
+        <li>
+          <span class="task-num">08</span>
+          <div>
+            <b>Phối hợp với team multimedia</b>
+            <span class="desc">Hand-off shots cho bạn motion designer comp/edit cuối, hoặc nhận 3D base để gen variant — AI là 1 mắt xích trong pipeline, không phải silo.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="req-box">
+        <h3>★ Must have</h3>
+        <ul>
+          <li>Thành thạo workflow <b>gen image</b>: Midjourney, SD, Flux, Nano Banana, Krea…</li>
+          <li>Biết <b>I2V tool</b>: Kling, Runway, Higgsfield, Veo, Hailuo, Pika</li>
+          <li><b>Prompt engineering</b> chắc tay — biết structure, weight, negative prompt, refine output</li>
+          <li>Tư duy <b>storyboard, narrative, visual storytelling</b></li>
+          <li>Hiểu <b>cinematography cơ bản</b>: framing, composition, lighting, lens, camera move</li>
+          <li>Quen với <b>voice/audio AI</b> (ElevenLabs, Suno, Udio…)</li>
+          <li>Biết <b>Photoshop</b> đủ để post-process, cleanup output</li>
+          <li>Portfolio có project AI gen (image / video) thật, không chỉ test prompt</li>
+        </ul>
+      </div>
+
+      <div style="height:20px"></div>
+
+      <div class="req-box plus">
+        <h3>★ Nice to have</h3>
+        <ul>
+          <li><b>Background 3D motion design</b> (ưu tiên rất cao) — Blender, C4D</li>
+          <li>Biết <b>ComfyUI</b> / custom node workflow</li>
+          <li>Đã train <b>LoRA</b> / fine-tune model cho project</li>
+          <li>Hiểu compositing đủ để hand-off shot sang Nuke / AE</li>
+          <li>Có blog / newsletter / Twitter follow AI scene mỗi tuần</li>
+          <li>Đã từng làm short film / commercial bằng AI</li>
+        </ul>
+      </div>
+
+      <div class="tools-title">— Tool stack (must)</div>
+      <div class="tools">
+        <div class="tool hot">Midjourney</div>
+        <div class="tool hot">Flux / SD</div>
+        <div class="tool hot">Higgsfield</div>
+        <div class="tool hot">Kling</div>
+        <div class="tool hot">Runway</div>
+        <div class="tool hot">Veo</div>
+        <div class="tool hot">Magnific</div>
+        <div class="tool hot">ElevenLabs</div>
+        <div class="tool hot">Suno</div>
+      </div>
+
+      <div class="tools-title">— Bonus</div>
+      <div class="tools">
+        <div class="tool">ComfyUI</div>
+        <div class="tool">Nano Banana</div>
+        <div class="tool">Krea</div>
+        <div class="tool">Hailuo</div>
+        <div class="tool">Pika</div>
+        <div class="tool">After Effects</div>
+        <div class="tool">Photoshop</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="workflow">
+    <h2>— A typical workflow looks like</h2>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="num">STEP 01</div>
+        <div class="name">Brief &amp; Ref</div>
+        <div class="tool-name">Notion · Pinterest</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 02</div>
+        <div class="name">Storyboard</div>
+        <div class="tool-name">Figma · Boords</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 03</div>
+        <div class="name">Gen Image</div>
+        <div class="tool-name">MJ · Flux · SD</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 04</div>
+        <div class="name">Upscale / Edit</div>
+        <div class="tool-name">Magnific · PS</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 05</div>
+        <div class="name">Img → Video</div>
+        <div class="tool-name">Kling · Runway · Veo</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 06</div>
+        <div class="name">Voice / Music</div>
+        <div class="tool-name">ElevenLabs · Suno</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 07</div>
+        <div class="name">Hand-off</div>
+        <div class="tool-name">→ Multimedia team</div>
+      </div>
+    </div>
+
+    <div style="margin-top:30px">
+      <div class="tools-title">— Expected output</div>
+      <div class="outputs">
+        <div class="output-card">
+          <div class="tag">DAILY</div>
+          <div class="label">Social AI post / KV variants</div>
+          <div class="meta">≈ 5-10 frames / brief</div>
+        </div>
+        <div class="output-card">
+          <div class="tag">WEEKLY</div>
+          <div class="label">AI short clip / teaser</div>
+          <div class="meta">15-30s, có audio</div>
+        </div>
+        <div class="output-card">
+          <div class="tag">MONTHLY</div>
+          <div class="label">AI campaign film</div>
+          <div class="meta">60-90s, full pipeline</div>
+        </div>
+        <div class="output-card">
+          <div class="tag">ONGOING</div>
+          <div class="label">Prompt library + style guide</div>
+          <div class="meta">Internal asset</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <h3>obsessed with <span class="ital">AI?</span></h3>
+    <p>Gửi CV + link sản phẩm AI bạn từng làm. Bonus điểm nếu kèm 1 đoạn ngắn nói về workflow yêu thích hoặc tool mới nhất bạn đang nghịch.</p>
+    <a href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank">Apply now →</a>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 · POST HOUSE · made with caffeine ☕</div>
+  <div>
+    <div>hellobroducers@gmail.com</div>
+    <div>0934104242 - Chou Ngoc Nguyen</div>
+  </div>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const jobs = document.querySelectorAll('.job');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    jobs.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+    window.scrollTo({top: document.querySelector('.tabs').offsetTop, behavior: 'smooth'});
+  }));
+</script>
+
+</body>
+</html>
